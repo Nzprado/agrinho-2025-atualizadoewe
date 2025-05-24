@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TecnoAgro - Tecnologia em Plantação Sem Agrotóxicos</title>
+  <style>
+    /* Reset and base styles */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #121213;
+      color: #c6c8ca;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+    }
+    a {
+      color: #66c0f4;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover, a:focus {
+      color: #a6d9ff;
+      outline: none;
+    }
+    header {
+      background: #17181a;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1db954;
+      letter-spacing: 2px;
+      user-select: none;
+      cursor: default;
+    }
+    nav {
+      display: flex;
+      gap: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    nav a {
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+    nav a:hover {
+      background: #1db954;
+      color: #121213;
+    }
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(90deg, #1db954cc 0%, #117a37cc 100%), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 60px;
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      margin: 20px 0 15px 0;
+      max-width: 600px;
+      line-height: 1.1;
+    }
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 480px;
+      margin-bottom: 25px;
+      font-weight: 500;
+    }
+    .btn-primary {
+      background: #1db954;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #121213;
+      cursor: pointer;
+      box-shadow: 0 5px 15px #1db954bb;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .btn-primary:hover {
+      background: #16a44a;
+      box-shadow: 0 8px 25px #16a44abb;
+    }
+
+    /* Main container */
+    main {
+      max-width: 1200px;
+      margin: 40px auto 60px;
+      padding: 0 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+    /* Technologies Section */
+    .section-header {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #1db954;
+      border-left: 6px solid #1db954;
+      padding-left: 12px;
+      user-select: none;
+    }
+    .technologies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 28px;
+    }
+    .tech-card {
+      background: #1e1f22;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .tech-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px #1db954aa;
+    }
+    .tech-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background-color: #000;
+    }
+    .tech-content {
+      padding: 18px 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .tech-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #1db954;
+    }
+    .tech-desc {
+      font-size: 1rem;
+      color: #ccc;
+      flex-grow: 1;
+    }
+
+    /* News Section */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .news-item {
+      background: #1e1f22;
+      border-radius: 10px;
+      padding: 16px 22px;
+      box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+      transition: background 0.3s ease;
+      cursor: pointer;
+    }
+    .news-item:hover {
+      background: #26272b;
+    }
+    .news-item h3 {
+      color: #1db954;
+      margin: 0 0 8px 0;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .news-item p {
+      color: #bbb;
+      font-size: 1rem;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* Detailed News View */
+    #news-detail {
+      background: #1e1f22;
+      border-radius: 12px;
+      padding: 25px 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      color: #ddd;
+    }
+    #news-detail h3 {
+      color: #1db954;
+      font-size: 2rem;
+      margin-top: 0;
+    }
+    #news-detail p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    #btn-back {
+      margin-top: 25px;
+      background-color: #1db954;
+      border: none;
+      color: #121213;
+      padding: 12px 24px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px #1db954bb;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    #btn-back:hover {
+      background-color: #16a44a;
+      box-shadow: 0 8px 25px #16a44abb;
+    }
+
+    /* Footer */
+    footer {
+      background: #17181a;
+      padding: 25px 30px;
+      text-align: center;
+      color: #555;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 700px) {
+      .hero {
+        height: 300px;
+        padding: 20px 30px;
+      }
+      .hero h1 {
+        font-size: 2rem;
+        max-width: 100%;
+      }
+      .hero p {
+        font-size: 1rem;
+        max-width: 100%;
+      }
+      nav {
+        gap: 18px;
+      }
+      main {
+        margin: 30px 20px 50px;
+        padding: 0 10px;
+      }
+      #news-detail h3 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" aria-label="TecnoAgro Logo">TecnoAgro</div>
+    <nav aria-label="Menu principal">
+      <a href="#tecnologias">Tecnologias</a>
+      <a href="#noticias">Notícias</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+  <section class="hero" role="banner" aria-label="Banner principal">
+    <h1>Tecnologia inovadora para campos sustentáveis e sem agrotóxicos</h1>
+    <p>Conectando o futuro da agricultura com soluções ecológicas e inteligentes para melhorar a produtividade e preservar o meio ambiente.</p>
+    <button class="btn-primary" onclick="window.location.href='#tecnologias'">Conheça as Soluções</button>
+  </section>
+  <main>
+    <section id="tecnologias" aria-label="Seção de tecnologias">
+      <h2 class="section-header">Tecnologias Destaque</h2>
+      <div class="technologies-grid">
+        <article class="tech-card" tabindex="0" aria-label="Drone Agrícola de Precisão" onclick="showDetail('drone')">
+          <img src="https://blog.climatefieldview.com.br/hubfs/Mapeamento-agricola-drone%20%283%29.jpg" alt="Drone voando sobre plantação" />
+          <div class="tech-content">
+            <h3 class="tech-title">Drone Agrícola de Precisão</h3>
+            <p class="tech-desc">Uso de drones para monitorar a saúde das plantações e aplicar técnicas de cuidado específicas, sem necessidade de agrotóxicos.</p>
+          </div>
+        </article>
+        <article class="tech-card" tabindex="0" aria-label="Sensores de Solo Inteligentes" onclick="showDetail('sensores')">
+          <img src="https://agrosmart.com.br/blog/wp-content/uploads/2019/06/Imagens-Sensores-BoosterPROUmidade-do-Solo-10HS-1.jpg" alt="Sensor de umidade em solo agrícola" />
+          <div class="tech-content">
+            <h3 class="tech-title">Sensores de Solo Inteligentes</h3>
+            <p class="tech-desc">Tecnologia para medir a umidade, pH e nutrientes do solo em tempo real garantindo um manejo natural e eficiente.</p>
+          </div>
+        </article>
+        <article class="tech-card" tabindex="0" aria-label="Irrigação Automatizada Sustentável" onclick="showDetail('irrigacao')">
+          <img src="https://agropos.com.br/wp-content/uploads/2020/10/Imagem-2023-11-10T151255.092.png" alt="Sistema de irrigação em plantação" />
+          <div class="tech-content">
+            <h3 class="tech-title">Irrigação Automatizada Sustentável</h3>
+            <p class="tech-desc">Controle inteligente de irrigação que economiza água e evita o uso de químicos ao sincronizar necessidades reais das plantas.</p>
+          </div>
+        </article>
+        <article class="tech-card" tabindex="0" aria-label="Análise por Inteligência Artificial" onclick="showDetail('ia')">
+          <img src="https://blog.climatefieldview.com.br/hs-fs/hubfs/Produtor%20analisa%20o%20Mapa%20de%20Umidade%20para%20realizar%20a%20colheita.jpg?width=616&name=Produtor%20analisa%20o%20Mapa%20de%20Umidade%20para%20realizar%20a%20colheita.jpg" alt="Mãos segurando tablet com dados de cultivo" />
+          <div class="tech-content">
+            <h3 class="tech-title">Análise por Inteligência Artificial</h3>
+            <p class="tech-desc">Plataformas que usam IA para prever pragas e recomendar práticas sustentáveis, eliminando o uso de agrotóxicos.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="noticias" aria-label="Seção de notícias recentes">
+      <h2 class="section-header">Notícias Recentes</h2>
+      <div class="news-list">
+        <article class="news-item" tabindex="0" id="news-drone" onclick="showDetail('drone')">
+          <h3>Drone Agrícola de Precisão</h3>
+          <p>Uso de drones para monitorar a saúde das plantações e aplicar técnicas específicas, eliminando agrotóxicos.</p>
+        </article>
+        <article class="news-item" tabindex="0" id="news-sensores" onclick="showDetail('sensores')">
+          <h3>Sensor de solo inteligente auxilia produtores a eliminar agrotóxicos</h3>
+          <p>A nova geração de sensores mede nutrientes e condições do solo para promover nutrientes naturais e melhores colheitas.</p>
+        </article>
+        <article class="news-item" tabindex="0" id="news-ia" onclick="showDetail('ia')">
+          <h3>Startups brasileiras lançam plataforma IA para o futuro da agricultura limpa</h3>
+          <p>Iniciativas nacionais aplicam inteligência artificial na tomada de decisões para agricultura sustentável e sem venenos.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="news-detail" aria-label="Detalhes da notícia" style="display:none;">
+      <h3 id="detail-title">Título da notícia</h3>
+      <p id="detail-content">
+        Conteúdo da notícia ou detalhe.
+      </p>
+      <button id="btn-back" aria-label="Voltar para lista de notícias" onclick="goBack()">Voltar</button>
+    </section>
+
+    <section id="sobre" aria-label="Seção sobre a TecnoAgro">
+      <h2 class="section-header">Sobre a TecnoAgro</h2>
+      <p>
+        A TecnoAgro é uma plataforma inovadora que se dedica a promover e divulgar as mais avançadas tecnologias para um cultivo responsável e sustentável. Com um forte compromisso em eliminar o uso de agrotóxicos, nossa missão é transformar a agricultura, integrando práticas ecológicas que respeitam o meio ambiente. 
+      </p>
+      <p>
+        Acreditamos que a união entre inovação, conhecimento e sustentabilidade é fundamental para garantir um futuro mais verde e saudável. Por meio de soluções tecnológicas de ponta, buscamos capacitar agricultores e produtores a adotarem métodos que não apenas aumentem a produtividade, mas também preservem a biodiversidade e a saúde do nosso planeta. Junte-se a nós nessa jornada rumo a uma agricultura mais consciente e sustentável!
+      </p>
+    </section>
+
+    <section id="contato" aria-label="Seção de contato">
+      <h2 class="section-header">Contato</h2>
+      <p>Tem interesse em nossas soluções ou quer saber mais? Entre em contato!</p>
+      <form onsubmit="event.preventDefault(); alert('Obrigado pelo contato! Em breve responderemos.');" aria-label="Formulário de contato">
+        <label for="nome" style="display:block; margin-top: 12px; font-weight:600;">Nome</label>
+        <input type="text" id="nome" name="nome" required style="width:100%; padding:8px; border-radius:5px; border:1px solid #444; background:#18191c; color:#eee;"/>
+        <label for="email" style="display:block; margin-top: 12px; font-weight:600;">Email</label>
+        <input type="email" id="email" name="email" required style="width:100%; padding:8px; border-radius:5px; border:1px solid #444; background:#18191c; color:#eee;"/>
+        <label for="mensagem" style="display:block; margin-top: 12px; font-weight:600;">Mensagem</label>
+        <textarea id="mensagem" name="mensagem" rows="4" required style="width:100%; padding:8px; border-radius:5px; border:1px solid #444; background:#18191c; color:#eee;"></textarea>
+        <button type="submit" class="btn-primary" style="margin-top: 15px;">Enviar</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    &copy;2025 TecnoAgro. Todos os direitos reservados. Feito Por Nathan Prado
+  </footer>
+
+  <script>
+    const details = {
+      drone: {
+        title: "Drone Agrícola de Precisão - Detalhes",
+        content: `Os drones agrícolas de precisão são equipamentos revolucionários que utilizam sensores avançados, câmeras multiespectrais e GPS para monitorar e analisar a saúde das plantações em tempo real. 
+        Com dados precisos sobre o estado das plantas, agricultores podem aplicar intervenções localizadas, como irrigação, fertilização e controle biológico, sem o uso de agrotóxicos ou pesticidas químicos agressivos.
+
+        Essa tecnologia reduz significativamente o impacto ambiental, otimiza o uso de recursos naturais e aumenta a produtividade das culturas. Além disso, drones permitem um monitoramento constante, identificando pragas e doenças em fase inicial, evitando grandes perdas.
+
+        Empresas e startups têm investido fortemente neste mercado, integrando inteligência artificial para análise de dados e automação das aplicações, transformando a agricultura orgânica e sustentável.`
+      },
+      sensores: {
+        title: "Sensores de Solo Inteligentes - Detalhes",
+        content: `Sensores de solo inteligentes monitoram em tempo real parâmetros essenciais como umidade, pH e nutrientes, fornecendo dados precisos que auxiliam agricultores a realizar práticas sustentáveis e sem o uso de agrotóxicos.
+
+        Estes sensores permitem um manejo ambientalmente responsável, evitando excessos que prejudicam o solo e incentivando o uso racional da água e dos fertilizantes naturais.
+
+        A tecnologia contribui para maior eficiência das culturas e qualidade dos alimentos, além de preservar o ecossistema local.`
+      },
+      irrigacao: {
+        title: "Irrigação Automatizada Sustentável - Detalhes",
+        content: `Sistemas de irrigação automatizados utilizam sensores e algoritmos para aplicar água conforme as necessidades reais das plantas, reduzindo desperdícios e eliminando o uso de produtos químicos.
+
+        Essa tecnologia permite aprimorar a produtividade e a saúde dos cultivos, garantindo um ciclo sustentável e respeitoso ao meio ambiente.
+
+        O sistema pode ser controlado remotamente, integrando soluções inteligentes para otimizar o uso dos recursos naturais.`
+      },
+      ia: {
+        title: "Análise por Inteligência Artificial - Detalhes",
+        content: `A inteligência artificial aplicada à agricultura limpa usa grandes volumes de dados para prever pragas, doenças e necessidades nutricionais das plantas.
+
+        Plataformas com IA recomendam práticas sustentáveis e intervenções precisas que evitam completamente o uso de agrotóxicos, aumentando a eficiência e reduzindo impactos ambientais.
+
+        Essa inovação tecnológica está transformando a agricultura, promovendo maior sustentabilidade e segurança alimentar para o futuro.`
+      }
+    };
+
+    function showDetail(key) {
+      if (!details[key]) return;
+      document.getElementById('noticias').style.display = 'none';
+      document.getElementById('tecnologias').style.display = 'none';
+      const newsDetail = document.getElementById('news-detail');
+      document.getElementById('detail-title').textContent = details[key].title;
+      document.getElementById('detail-content').innerText = details[key].content;
+      newsDetail.style.display = 'block';
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function goBack() {
+      document.getElementById('news-detail').style.display = 'none';
+      document.getElementById('noticias').style.display = 'block';
+      document.getElementById('tecnologias').style.display = 'block';
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  </script>
+</body>
+</html>
